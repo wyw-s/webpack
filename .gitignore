@@ -1,0 +1,11 @@
+# 仅仅忽略项目根目录下的 dist 文件，不包括 subdir/dist
+/dist
+
+# 忽略所有 node_modules 命名的文件
+node_modules
+
+# 忽略所有 .idea 命名的文件/文件夹
+.idea
+
+# 忽略由于npm 安装失败时创建的日志文件：
+npm_debug.log*
