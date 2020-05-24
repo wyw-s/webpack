@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack --config webpack.config.js"
+    "serve": "webpack-dev-server --hot --devtool source-map",
+    "build": "webpack --config webpack.config.js"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +17,7 @@
     "extract-text-webpack-plugin": "^3.0.2",
     "optimize-css-assets-webpack-plugin": "^3.2.1",
     "style-loader": "^1.2.1",
-    "webpack": "^3.8.1"
+    "webpack": "^3.8.1",
+    "webpack-dev-server": "^2.6.1"
   }
 }

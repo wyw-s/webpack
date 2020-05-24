@@ -41,7 +41,8 @@ module.exports = {
   },
   plugins: [
     new ExtractTextPlugin({
-      filename: '[name]_[id]_[contenthash:8].min.css'
+      // filename: '[name]_[id]_[contenthash:8].min.css'
+      filename: 'main.min.css'
     }),
 
     new OptimizeCssAssetsPlugin({
