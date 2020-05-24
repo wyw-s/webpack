@@ -6,10 +6,14 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 
 module.exports = {
+  // 设置webpack在寻找相对路径时以 context为 根目录进行查找
+  context: path.resolve(__dirname, 'src'),
+  // 若指定了 context 则入口文件会从指定的目录：src 中查找 main.js 文件；
   entry: './main.js',
   output: {
-    // 将所有依赖的模块合并输出到一个bundle.js文件；
-    filename: 'bundle.js',
+    // 将所有依赖的模块合并输出到一个[name].js文件
+    // 若不指定静态的文件名则的默认的name为：main；
+    filename: '[name]_[id]_[hash:8].js',
     // 将输出文件都放在dist目录下；
     path: path.resolve(__dirname, './dist')
   },
@@ -41,8 +45,8 @@ module.exports = {
   },
   plugins: [
     new ExtractTextPlugin({
-      // filename: '[name]_[id]_[contenthash:8].min.css'
-      filename: 'main.min.css'
+      filename: '[name]_[id]_[contenthash:8].min.css'
+      // filename: 'main.min.css'
     }),
 
     new OptimizeCssAssetsPlugin({
