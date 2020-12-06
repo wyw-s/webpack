@@ -4,6 +4,8 @@ const path = require('path')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 // css 代码压缩
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const { WebPlugin } = require('web-webpack-plugin')
 
 module.exports = {
   // 设置webpack在寻找相对路径时以 context为 根目录进行查找
@@ -13,7 +15,8 @@ module.exports = {
   output: {
     // 将所有依赖的模块合并输出到一个[name].js文件
     // 若不指定静态的文件名则的默认的name为：main；
-    filename: '[name]_[id]_[hash:8].js',
+    // filename: '[name]_[id]_[hash:8].js',
+    filename: '[name]_[hash].js',
     // 将输出文件都放在dist目录下；
     path: path.resolve(__dirname, './dist')
   },
@@ -32,20 +35,29 @@ module.exports = {
          * 解析顺序为从后往前，既先使用css-loader解析,在使用 style-loader 把生成的
          * js插入到head头部的<style></style>中
          */
-        // use: ['style-loader', 'css-loader'],
-        // 提取css到单独的文件中
-        use: ExtractTextPlugin.extract({
-          // 编译后用来提取css文件 用于当css没有被提取时
-          fallback: 'style-loader',
-          // 编译文件
-          use: 'css-loader'
-        })
+        use: ['style-loader', 'css-loader'],
+        // 提取css到单独的文件中 注：此插件开启时，css并不会热更新，
+        // use: ExtractTextPlugin.extract({
+        //   // 用于当css没有被提取时
+        //   fallback: 'style-loader',
+        //   // 编译文件
+        //   use: 'css-loader'
+        // })
       }
     ]
   },
   plugins: [
+    new CleanWebpackPlugin(),
+    // 用于生成index.html文件注：需要提供模板
+    new WebPlugin({
+      template: './template.html',
+      filename: 'index.html'
+    }),
+
+    // 配置提取的css文件的文件名
     new ExtractTextPlugin({
-      filename: '[name]_[id]_[contenthash:8].min.css'
+      // filename: '[name]_[id]_[contenthash:8].min.css'
+      filename: '[name].css'
       // filename: 'main.min.css'
     }),
 
